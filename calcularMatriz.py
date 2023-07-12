@@ -59,7 +59,14 @@ def detectar():
         output = subprocess.check_output(["python", "IdentificaRostro.py"])
         output = output.decode("utf-8")
         print("AAAAAAAAAAAA: ",output)
-        return output
+        response = jsonify(msg=output)
+        response.headers["Content-Type"] = "application/json; charset=utf-8"
+        if(output[0] == "1"):
+            response.status_code = 200
+        else:
+            response.status_code = 403
+        return response
+        
     except Exception as e:
         print(e)
         
@@ -131,4 +138,4 @@ def detectar():
         
 
 if __name__ == '__main__':
-    app.run(debug=True, host='localhost', port=8100)
+    app.run(debug=True, host='192.168.192.6', port=8100)
